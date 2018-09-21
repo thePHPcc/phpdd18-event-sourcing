@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class CartItemCollectionTest extends TestCase
 {
-
     public function testIsCountable()
     {
         $collection = new CartItemCollection();
@@ -43,5 +43,4 @@ class CartItemCollectionTest extends TestCase
     {
         return $this->createMock(CartItem::class);
     }
-
 }

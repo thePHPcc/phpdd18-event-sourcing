@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 class EventLog
 {
     /**
@@ -8,7 +9,8 @@ class EventLog
      */
     private $events = [];
 
-    public function append(Event $event) {
+    public function append(Event $event)
+    {
         $this->events[] = $event;
     }
 }

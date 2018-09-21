@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class CartService
 {
-
     public function getCartItems(SessionId $sessionId): CartItemCollection
     {
         switch ($sessionId->asString()) {

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class MailServiceTest extends TestCase
 {
-
     public function testWritesExpectedOutput()
     {
         $mail = $this->createMailMock();
@@ -27,5 +27,4 @@ class MailServiceTest extends TestCase
     {
         return $this->createMock(Mail::class);
     }
-
 }
