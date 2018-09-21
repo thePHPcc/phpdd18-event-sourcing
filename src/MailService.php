@@ -8,6 +8,6 @@ class MailService
     {
         echo sprintf("Sending mail with subject '%s' to %s... \n", $mail->getSubject(), $mail->getRecipientAddress());
         sleep(2);
-        echo sprintf("Mail sent. \n", $mail->getRecipientAddress());
+        echo sprintf("Mail sent to %s. \n", $mail->getRecipientAddress());
     }
 }
