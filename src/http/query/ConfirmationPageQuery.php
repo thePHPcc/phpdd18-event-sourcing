@@ -3,13 +3,14 @@
 namespace Eventsourcing\Http;
 
 use Eventsourcing\Session;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 
 class ConfirmationPageQuery
 {
     /**
-      * @var Session
-      */
+     * @var Session
+     */
     private $session;
 
     public function __construct(Session $session)
@@ -17,7 +18,10 @@ class ConfirmationPageQuery
         $this->session = $session;
     }
 
-    public function execute(Response $response)
+    /**
+     * @throws \Eventsourcing\NoCheckoutIdFoundException
+     */
+    public function execute(Response $response): ResponseInterface
     {
         if (!$this->session->hasCheckoutId()) {
             return $response->withRedirect('/');
