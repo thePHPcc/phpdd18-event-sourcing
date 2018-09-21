@@ -25,10 +25,10 @@ class PdoEventLogWriter implements EventLogWriter
     private function writeEvent(Event $event): void
     {
         $statement = $this->pdo->prepare(
-            'INSERT INTO events (emitter_id, occured_at, topic, data) VALUES (:emitterId, :occuredAt, :topic, :data)'
+            'INSERT INTO events (emitter_id, occurred_at, topic, data) VALUES (:emitterId, :occurredAt, :topic, :data)'
         );
         $statement->bindValue('emitterId', $event->getEmitterId()->asString());
-        $statement->bindValue('occuredAt', $event->getOccurredAt()->format(DATE_ATOM));
+        $statement->bindValue('occurredAt', $event->getOccurredAt()->format(DATE_ATOM));
         $statement->bindValue('topic', $event->getTopic()->asString());
         $statement->bindValue('data', serialize($event));
 

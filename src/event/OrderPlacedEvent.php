@@ -18,9 +18,9 @@ class OrderPlacedEvent implements Event
      */
     private $order;
 
-    public function __construct(\DateTimeImmutable $occuredAt, EmitterId $emitterId, Order $order)
+    public function __construct(\DateTimeImmutable $occurredAt, EmitterId $emitterId, Order $order)
     {
-        $this->occurredAt = $occuredAt;
+        $this->occurredAt = $occurredAt;
         $this->emitterId = $emitterId;
         $this->order = $order;
     }

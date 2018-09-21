@@ -6,7 +6,7 @@ $pdo->exec(
     'CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY, 
       emitter_id VARCHAR(36),
-      occured_at TIMESTAMP,
+      occurred_at TIMESTAMP,
       topic VARCHAR(50),
       data TEXT 
     )'

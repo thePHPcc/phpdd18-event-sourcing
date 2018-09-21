@@ -19,9 +19,9 @@ class BillingAddressEnteredEvent implements Event
      */
     private $billingAddress;
 
-    public function __construct(\DateTimeImmutable $occuredAt, EmitterId $emitterId, BillingAddress $billingAddress)
+    public function __construct(\DateTimeImmutable $occurredAt, EmitterId $emitterId, BillingAddress $billingAddress)
     {
-        $this->occurredAt = $occuredAt;
+        $this->occurredAt = $occurredAt;
         $this->emitterId = $emitterId;
         $this->billingAddress = $billingAddress;
     }
