@@ -25,6 +25,11 @@ class Checkout
      */
     private $billingAddress;
 
+    /**
+     * @var bool
+     */
+    private $ordered = false;
+
 
     public function __construct(EventLog $history)
     {
@@ -46,7 +51,32 @@ class Checkout
         if (!$this->hasBeenStarted()) {
             throw new CheckoutNotStartedException();
         }
+
+        if ($this->ordered) {
+            throw new AlreadyOrderedException();
+        }
+
         $this->recordEvent(new BillingAddressEnteredEvent(new \DateTimeImmutable(), $this->emitterId, $billingAddress));
+    }
+
+    public function placeOrder()
+    {
+        if (!$this->hasBeenStarted()) {
+            throw new CheckoutNotStartedException();
+        }
+
+        if ($this->billingAddress === null) {
+            throw new MissingBillingAddressException();
+        }
+
+        if ($this->ordered) {
+            throw new AlreadyOrderedException();
+        }
+
+        $generator = new OrderGenerator();
+        $order = $generator->generate($this->billingAddress, $this->cartItems);
+
+        $this->recordEvent(new OrderPlacedEvent(new \DateTimeImmutable(), $this->emitterId, $order));
     }
 
     public function getRecordedEvents(): EventLog
@@ -84,7 +114,16 @@ class Checkout
                 /** @var BillingAddressEnteredEvent $event */
                 $this->applyBillingAddressEnteredEvent($event);
                 break;
+            case $topic->equals(new OrderPlacedTopic()):
+                /** @var OrderPlacedEvent $event */
+                $this->applyOrderPlacedEvent($event);
+                break;
         }
+    }
+
+    private function applyOrderPlacedEvent(OrderPlacedEvent $event)
+    {
+        $this->ordered = true;
     }
 
     private function applyBillingAddressEnteredEvent(BillingAddressEnteredEvent $event)
