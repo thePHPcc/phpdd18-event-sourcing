@@ -25,4 +25,9 @@ class Order
         $this->billingAddress = $billingAddress;
         $this->items = $items;
     }
+
+    public function getBillingAddress(): BillingAddress
+    {
+        return $this->billingAddress;
+    }
 }

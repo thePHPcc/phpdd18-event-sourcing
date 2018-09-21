@@ -54,6 +54,7 @@ class Factory
         return new BillingAddressProjector($this->createBillingAddressProjectionRenderer(), $this->createProjectionWriter());
     }
 
+
     private function createEventLogReader(): PdoEventLogReader
     {
         return new PdoEventLogReader($this->createSession(), $this->createPdo());
