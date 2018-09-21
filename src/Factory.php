@@ -6,6 +6,7 @@ use Eventsourcing\Http\AddressPageQuery;
 use Eventsourcing\Http\CheckoutService;
 use Eventsourcing\Http\ConfirmationPageQuery;
 use Eventsourcing\Http\StartCheckoutCommand;
+use Slim\Views\PhpRenderer;
 
 class Factory
 {
@@ -112,7 +113,10 @@ class Factory
 
     public function createAddressPageQuery(): AddressPageQuery
     {
-        return new AddressPageQuery($this->createSession());
+        return new AddressPageQuery(
+            $this->createSession(),
+            $this->createTemplateRenderer()
+        );
     }
 
     public function createCheckoutStartedSessionUpdater(): CheckoutStartedSessionUpdater
@@ -122,6 +126,14 @@ class Factory
 
     public function createConfirmationPageQuery(): ConfirmationPageQuery
     {
-        return new ConfirmationPageQuery($this->createSession());
+        return new ConfirmationPageQuery(
+            $this->createSession(),
+            $this->createTemplateRenderer()
+        );
+    }
+
+    private function createTemplateRenderer(): PhpRenderer
+    {
+        return new PhpRenderer(__DIR__ . '/projection/templates');
     }
 }
