@@ -15,7 +15,7 @@ class MailServiceTest extends TestCase
         $service = new MailService();
 
         $expectedOutput = "Sending mail with subject 'some subject' to jane.doe@example.com... \n";
-        $expectedOutput .= "Mail sent. \n";
+        $expectedOutput .= "Mail sent to jane.doe@example.com. \n";
         $this->expectOutputString($expectedOutput);
         $service->send($mail);
     }
