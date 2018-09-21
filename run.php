@@ -13,7 +13,16 @@ $factory = new \Eventsourcing\Factory($sessionId);
 $cartItems = $factory->createCartService()->getCartItems($sessionId);
 
 $checkout = $factory->createCheckout();
-$checkout->startCheckout($cartItems);
+$checkout->setBillingAddress(
+    new \Eventsourcing\BillingAddress(
+        'John Doe',
+        'foo',
+        'bar',
+        '12345',
+        'baz',
+        'DE'
+    )
+);
 
 $eventLog = $checkout->getRecordedEvents();
 

@@ -20,6 +20,12 @@ class Checkout
      */
     private $cartItems;
 
+    /**
+     * @var BillingAddress
+     */
+    private $billingAddress;
+
+
     public function __construct(EventLog $history)
     {
         $this->replay($history);
@@ -28,16 +34,29 @@ class Checkout
 
     public function startCheckout(CartItemCollection $cartItems)
     {
-        if ($this->emitterId !== null) {
+        if ($this->hasBeenStarted()) {
             throw new CheckoutAlreadyStartedException();
         }
         $event = new CheckoutStartedEvent(new EmitterId(), $cartItems, new \DateTimeImmutable());
         $this->recordEvent($event);
     }
 
+    public function setBillingAddress(BillingAddress $billingAddress)
+    {
+        if (!$this->hasBeenStarted()) {
+            throw new CheckoutNotStartedException();
+        }
+        $this->recordEvent(new BillingAddressEnteredEvent(new \DateTimeImmutable(), $this->emitterId, $billingAddress));
+    }
+
     public function getRecordedEvents(): EventLog
     {
         return $this->eventLog;
+    }
+
+    private function hasBeenStarted(): bool
+    {
+        return $this->emitterId !== null;
     }
 
     private function replay(EventLog $eventLog)
@@ -55,12 +74,22 @@ class Checkout
 
     private function applyEvent(Event $event)
     {
+        $topic = $event->getTopic();
         switch (true) {
-            case $event->getTopic()->equals(new CheckoutStartedTopic()):
+            case $topic->equals(new CheckoutStartedTopic()):
                 /** @var CheckoutStartedEvent $event */
                 $this->applyCheckoutStartedEvent($event);
                 break;
+            case $topic->equals(new BillingAddressEnteredTopic()):
+                /** @var BillingAddressEnteredEvent $event */
+                $this->applyBillingAddressEnteredEvent($event);
+                break;
         }
+    }
+
+    private function applyBillingAddressEnteredEvent(BillingAddressEnteredEvent $event)
+    {
+        $this->billingAddress = $event->getBillingAddress();
     }
 
     private function applyCheckoutStartedEvent(CheckoutStartedEvent $event)
