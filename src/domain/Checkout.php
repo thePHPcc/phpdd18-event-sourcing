@@ -115,13 +115,12 @@ class Checkout
                 $this->applyBillingAddressEnteredEvent($event);
                 break;
             case $topic->equals(new OrderPlacedTopic()):
-                /** @var OrderPlacedEvent $event */
-                $this->applyOrderPlacedEvent($event);
+                $this->applyOrderPlacedEvent();
                 break;
         }
     }
 
-    private function applyOrderPlacedEvent(OrderPlacedEvent $event)
+    private function applyOrderPlacedEvent(): void
     {
         $this->ordered = true;
     }
