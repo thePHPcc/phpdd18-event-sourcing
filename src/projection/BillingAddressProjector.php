@@ -23,6 +23,6 @@ class BillingAddressProjector implements EventHandler
     {
         /** @var BillingAddressEnteredEvent $event */
         $projection = $this->renderer->render($event->getBillingAddress());
-        $this->projectionWriter->write($projection);
+        $this->projectionWriter->write($event->getEmitterId(), $projection);
     }
 }

@@ -2,6 +2,11 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Http\AddressPageQuery;
+use Eventsourcing\Http\CheckoutService;
+use Eventsourcing\Http\ConfirmationPageQuery;
+use Eventsourcing\Http\StartCheckoutCommand;
+
 class Factory
 {
     /**
@@ -28,10 +33,9 @@ class Factory
         return new Checkout($this->createEventLogReader()->read());
     }
 
-
     public function createCartService(): CartService
     {
-        return new CartService();
+        return new CartService($this->sessionId);
     }
 
     public function createEventLogWriter(): PdoEventLogWriter
@@ -54,6 +58,13 @@ class Factory
         return new BillingAddressProjector($this->createBillingAddressProjectionRenderer(), $this->createProjectionWriter());
     }
 
+    public function createStartCheckoutCommand(): StartCheckoutCommand
+    {
+        return new StartCheckoutCommand(
+            $this->createCartService(),
+            $this->createCheckoutService()
+        );
+    }
 
     private function createEventLogReader(): PdoEventLogReader
     {
@@ -67,7 +78,7 @@ class Factory
 
     private function createProjectionWriter(): ProjectionWriter
     {
-        return new ProjectionWriter($this->sessionId);
+        return new ProjectionWriter();
     }
 
     private function createPdo(): \PDO
@@ -83,5 +94,29 @@ class Factory
     private function createBillingAddressProjectionRenderer(): BillingAddressProjectionRenderer
     {
         return new BillingAddressProjectionRenderer();
+    }
+
+    private function createCheckoutService(): CheckoutService
+    {
+        return new CheckoutService(
+            $this->createEventLogReader(),
+            $this->createEventLogWriter(),
+            $this->createEventListener()
+        );
+    }
+
+    public function createAddressPageQuery(): AddressPageQuery
+    {
+        return new AddressPageQuery($this->createSession());
+    }
+
+    public function createCheckoutStartedSessionUpdater(): CheckoutStartedSessionUpdater
+    {
+        return new CheckoutStartedSessionUpdater($this->createSession());
+    }
+
+    public function createConfirmationPageQuery(): ConfirmationPageQuery
+    {
+        return new ConfirmationPageQuery($this->createSession());
     }
 }

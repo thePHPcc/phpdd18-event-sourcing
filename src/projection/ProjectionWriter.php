@@ -4,19 +4,9 @@ namespace Eventsourcing;
 
 class ProjectionWriter
 {
-    /**
-     * @var SessionId
-     */
-    private $sessionId;
-
-    public function __construct(SessionId $sessionId)
+    public function write(EmitterId $emitterId, Projection $projection)
     {
-        $this->sessionId = $sessionId;
-    }
-
-    public function write(Projection $projection)
-    {
-        $filename = sprintf(__DIR__ . '/../../var/projections/%s_%s', $projection->getType(), $this->sessionId->asString());
+        $filename = sprintf(__DIR__ . '/../../var/projections/%s_%s.html', $projection->getType(), $emitterId->asString());
         file_put_contents($filename, $projection->getBody());
     }
 }

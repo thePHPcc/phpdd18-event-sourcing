@@ -11,7 +11,7 @@ $_SESSION = [
 
 $factory = new \Eventsourcing\Factory($sessionId);
 
-$cartItems = $factory->createCartService()->getCartItems($sessionId);
+$cartItems = $factory->createCartService()->getCartItems();
 
 $checkout = $factory->createCheckout();
 $checkout->startCheckout($cartItems);

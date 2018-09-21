@@ -4,13 +4,25 @@ namespace Eventsourcing;
 
 class BillingAddressProjectionRenderer
 {
-    public function render(BillingAddress $billingAddress): Projection
+    public function render(BillingAddress $billingAddress): BillingAddressProjection
     {
-        $output = 'Billing Address:';
-        $output .= $billingAddress->getName() . "\n";
-        $output .= $billingAddress->getStreet() . "\n";
-        $output .= $billingAddress->getCity() . "\n";
-
-        return new BillingAddressProjection($output);
+        $template = file_get_contents(__DIR__ . '/templates/billingAddress.html');
+        return new BillingAddressProjection(
+            str_replace(
+                [
+                    '%%NAME%%',
+                    '%%STREET%%',
+                    '%%ZIP%%',
+                    '%%CITY%%'
+                ],
+                [
+                    $billingAddress->getName(),
+                    $billingAddress->getStreet(),
+                    $billingAddress->getZip(),
+                    $billingAddress->getCity()
+                ],
+                $template
+            )
+        );
     }
 }

@@ -4,9 +4,20 @@ namespace Eventsourcing;
 
 class CartService
 {
-    public function getCartItems(SessionId $sessionId): CartItemCollection
+    /**
+     * @var SessionId
+     */
+    private $sessionId;
+
+    public function __construct(SessionId $sessionId)
     {
-        switch ($sessionId->asString()) {
+        $this->sessionId = $sessionId;
+    }
+
+
+    public function getCartItems(): CartItemCollection
+    {
+        switch ($this->sessionId->asString()) {
             case 'ihgorhmtcvo3qmd5as2oi7thpf':
                 $numberOfItems = 1;
                 break;

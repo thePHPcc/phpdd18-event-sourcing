@@ -24,6 +24,6 @@ class CartItemListProjector implements EventHandler
     {
         /**@var CheckoutStartedEvent $event */
         $projection = $this->renderer->render($event->getCartItems());
-        $this->projectionWriter->write($projection);
+        $this->projectionWriter->write($event->getEmitterId(), $projection);
     }
 }

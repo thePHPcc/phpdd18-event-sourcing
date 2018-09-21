@@ -1,5 +1,10 @@
 {
-  "autoload": {
-    "classmap": ["src/"]
-  }
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require": {
+        "slim/slim": "^3.10",
+        "monolog/monolog": "^1.23",
+        "slim/php-view": "^2.2"
+    }
 }

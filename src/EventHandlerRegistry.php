@@ -37,6 +37,7 @@ class EventHandlerRegistry
 
     private function addCheckoutStartedEventHandlers(EventHandlerCollection $eventHandlers)
     {
+        $eventHandlers->add($this->factory->createCheckoutStartedSessionUpdater());
         $eventHandlers->add($this->factory->createCartItemListProjector());
     }
 }
