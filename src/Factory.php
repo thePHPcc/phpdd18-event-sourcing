@@ -39,7 +39,7 @@ class Factory
         return new CartService($this->sessionId);
     }
 
-    public function createEventLogWriter(): PdoEventLogWriter
+    public function createEventLogWriter(): EventLogWriter
     {
         return new PdoEventLogWriter($this->createPdo());
     }
@@ -67,7 +67,7 @@ class Factory
         );
     }
 
-    private function createEventLogReader(): PdoEventLogReader
+    private function createEventLogReader(): EventLogReader
     {
         return new PdoEventLogReader($this->createSession(), $this->createPdo());
     }
