@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class Checkout
 {
-
     /**
      * @var EventLog
      */
@@ -30,14 +29,17 @@ class Checkout
      */
     private $ordered = false;
 
-
     public function __construct(EventLog $history)
     {
         $this->replay($history);
         $this->eventLog = new EventLog();
     }
 
-    public function startCheckout(CartItemCollection $cartItems)
+    /**
+     * @throws CheckoutAlreadyStartedException
+     * @throws \Exception
+     */
+    public function startCheckout(CartItemCollection $cartItems): void
     {
         if ($this->hasBeenStarted()) {
             throw new CheckoutAlreadyStartedException();
@@ -46,7 +48,12 @@ class Checkout
         $this->recordEvent($event);
     }
 
-    public function setBillingAddress(BillingAddress $billingAddress)
+    /**
+     * @throws AlreadyOrderedException
+     * @throws CheckoutNotStartedException
+     * @throws \Exception
+     */
+    public function setBillingAddress(BillingAddress $billingAddress): void
     {
         if (!$this->hasBeenStarted()) {
             throw new CheckoutNotStartedException();
@@ -59,7 +66,13 @@ class Checkout
         $this->recordEvent(new BillingAddressEnteredEvent(new \DateTimeImmutable(), $this->emitterId, $billingAddress));
     }
 
-    public function placeOrder()
+    /**
+     * @throws AlreadyOrderedException
+     * @throws CheckoutNotStartedException
+     * @throws MissingBillingAddressException
+     * @throws \Exception
+     */
+    public function placeOrder(): void
     {
         if (!$this->hasBeenStarted()) {
             throw new CheckoutNotStartedException();
@@ -89,20 +102,20 @@ class Checkout
         return $this->emitterId !== null;
     }
 
-    private function replay(EventLog $eventLog)
+    private function replay(EventLog $eventLog): void
     {
         foreach ($eventLog as $event) {
             $this->applyEvent($event);
         }
     }
 
-    private function recordEvent(Event $event)
+    private function recordEvent(Event $event): void
     {
         $this->eventLog->append($event);
         $this->applyEvent($event);
     }
 
-    private function applyEvent(Event $event)
+    private function applyEvent(Event $event): void
     {
         $topic = $event->getTopic();
         switch (true) {
@@ -125,12 +138,12 @@ class Checkout
         $this->ordered = true;
     }
 
-    private function applyBillingAddressEnteredEvent(BillingAddressEnteredEvent $event)
+    private function applyBillingAddressEnteredEvent(BillingAddressEnteredEvent $event): void
     {
         $this->billingAddress = $event->getBillingAddress();
     }
 
-    private function applyCheckoutStartedEvent(CheckoutStartedEvent $event)
+    private function applyCheckoutStartedEvent(CheckoutStartedEvent $event): void
     {
         $this->emitterId = $event->getEmitterId();
         $this->cartItems = $event->getCartItems();

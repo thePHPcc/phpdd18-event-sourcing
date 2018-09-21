@@ -6,7 +6,6 @@ use Eventsourcing\CartService;
 
 class StartCheckoutCommand
 {
-
     /**
      * @var CartService
      */
@@ -23,7 +22,10 @@ class StartCheckoutCommand
         $this->checkoutService = $checkoutService;
     }
 
-    public function execute()
+    /**
+     * @throws \Eventsourcing\CartNotFoundException
+     */
+    public function execute(): void
     {
         $this->checkoutService->start($this->cartService->getCartItems());
     }

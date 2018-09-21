@@ -9,11 +9,13 @@ $factory = new \Eventsourcing\Factory($sessionId);
 // Routes
 $app->get('/checkout/address', function (Request $request, Response $response) use ($factory) {
     $query = $factory->createAddressPageQuery();
+
     return $query->execute($response);
 });
 
 $app->get('/checkout/confirm', function (Request $request, Response $response) use ($factory) {
     $query = $factory->createConfirmationPageQuery();
+
     return $query->execute($response);
 });
 

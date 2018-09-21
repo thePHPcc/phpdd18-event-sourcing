@@ -14,7 +14,10 @@ class CartService
         $this->sessionId = $sessionId;
     }
 
-
+    /**
+     * @throws CartNotFoundException
+     * @throws \Exception
+     */
     public function getCartItems(): CartItemCollection
     {
         switch ($this->sessionId->asString()) {
@@ -28,13 +31,14 @@ class CartService
                 $numberOfItems = 25;
                 break;
 
-            default: throw new CartNotFoundException();
+            default:
+                throw new CartNotFoundException();
         }
 
         $items = new CartItemCollection();
         for ($i = 0; $i < $numberOfItems; $i++) {
-            $price = rand(10, 9999);
-            $items->add(new CartItem($i + 1, 'Product ' . rand(0, 999), $price));
+            $price = random_int(10, 9999);
+            $items->add(new CartItem($i + 1, 'Product ' . random_int(0, 999), $price));
         }
 
         return $items;

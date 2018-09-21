@@ -20,6 +20,9 @@ class PdoEventLogReader implements EventLogReader
         $this->pdo = $pdo;
     }
 
+    /**
+     * @throws NoCheckoutIdFoundException
+     */
     public function read(): EventLog
     {
         $eventLog = new EventLog();

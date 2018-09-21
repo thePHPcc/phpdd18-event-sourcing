@@ -26,8 +26,11 @@ class AddressPageQuery
         $id = $this->session->getCheckoutId();
         $renderer = new \Slim\Views\PhpRenderer(__DIR__ . '/../templates');
         $data = [
-            'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html')
+            'cartItemList' => file_get_contents(
+                __DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html'
+            )
         ];
+
         return $renderer->render($response, 'address.phtml', $data);
     }
 }

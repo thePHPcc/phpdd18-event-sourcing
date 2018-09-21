@@ -10,8 +10,8 @@ class CartItemListProjector implements EventHandler
     private $renderer;
 
     /**
-      * @var ProjectionWriter
-      */
+     * @var ProjectionWriter
+     */
     private $projectionWriter;
 
     public function __construct(CartItemListProjectionRenderer $renderer, ProjectionWriter $projectionWriter)

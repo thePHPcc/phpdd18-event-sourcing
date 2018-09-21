@@ -15,6 +15,9 @@ class EventStream
         $this->reader = $reader;
     }
 
+    /**
+     * @throws \RuntimeException
+     */
     public function getNext(): Event
     {
         while (true) {

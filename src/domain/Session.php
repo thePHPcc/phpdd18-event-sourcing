@@ -4,6 +4,9 @@ namespace Eventsourcing;
 
 class Session
 {
+    /**
+     * @throws NoCheckoutIdFoundException
+     */
     public function getCheckoutId(): EmitterId
     {
         if ($this->hasCheckoutId()) {

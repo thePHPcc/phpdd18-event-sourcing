@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class CartItemCollection implements \IteratorAggregate, \Countable
 {
-
     /**
      * @var CartItem[]
      */

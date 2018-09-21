@@ -11,7 +11,6 @@ use Eventsourcing\EventLogWriter;
 
 class CheckoutService
 {
-
     /**
      * @var EventLogReader
      */
@@ -27,14 +26,20 @@ class CheckoutService
      */
     private $eventListener;
 
-    public function __construct(EventLogReader $eventLogReader, EventLogWriter $eventLogWriter, EventListener $eventListener)
-    {
+    public function __construct(
+        EventLogReader $eventLogReader,
+        EventLogWriter $eventLogWriter,
+        EventListener $eventListener
+    ) {
         $this->eventLogReader = $eventLogReader;
         $this->eventLogWriter = $eventLogWriter;
         $this->eventListener = $eventListener;
     }
 
-    public function start(CartItemCollection $cartItems)
+    /**
+     * @throws \Eventsourcing\CheckoutAlreadyStartedException
+     */
+    public function start(CartItemCollection $cartItems): void
     {
         $checkout = new Checkout(new EventLog());
         $checkout->startCheckout($cartItems);
