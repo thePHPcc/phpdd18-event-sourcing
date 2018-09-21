@@ -9,9 +9,9 @@ class ConsumeFactory
         return new AsyncEventHandlerRegistry($this);
     }
 
-    public function createEventStream(Topic $topic): EventStream
+    public function createEventStream(Topic $topic, StreamIdentifier $identifier): EventStream
     {
-        return new EventStream($this->createEventStreamReader($topic));
+        return new EventStream($this->createEventStreamReader($topic, $identifier));
     }
 
     public function createOrderPlacedEmailConfirmationSender(): OrderPlacedEmailConfirmationSender
@@ -19,9 +19,9 @@ class ConsumeFactory
         return new OrderPlacedEmailConfirmationSender($this->createMailService());
     }
 
-    private function createEventStreamReader(Topic $topic): EventStreamReader
+    private function createEventStreamReader(Topic $topic, StreamIdentifier $identifier): EventStreamReader
     {
-        return new EventStreamReader($this->createPdo(), $topic);
+        return new EventStreamReader($this->createPdo(), $identifier, $topic);
     }
 
     private function createMailService(): MailService

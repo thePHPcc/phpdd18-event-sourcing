@@ -11,11 +11,11 @@ $pdo->exec(
       data TEXT 
     )'
 );
-/*
+
 $pdo->exec(
     'CREATE TABLE IF NOT EXISTS event_streams (
       identifier VARCHAR(25) PRIMARY KEY ,
       last_id INTEGER 
     )'
 );
-*/
+
