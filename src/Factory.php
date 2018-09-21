@@ -119,4 +119,12 @@ class Factory
     {
         return new ConfirmationPageQuery($this->createSession());
     }
+	
+	public function createAddBillingAddressCommand() {
+    	return new AddBillingAddressCommand($this->createCheckoutService());
+	}
+	
+	public function createPlaceOrderCommand() {
+    	return new PlaceOrderCommand($this->createCheckoutService());
+	}
 }

@@ -32,7 +32,7 @@ $app->post('/startCheckout', function (Request $request, Response $response) use
 });
 
 $app->post('/placeOrder', function (Request $request, Response $response) use ($factory) {
-    $command = $factory->createPlaceOrderCOmmand();
+    $command = $factory->createPlaceOrderCommand();
     $command->execute();
 
     return $response->withRedirect('/thankyou.html', 303);
