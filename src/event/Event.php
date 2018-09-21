@@ -6,7 +6,7 @@ interface Event
 {
     public function getEmitterId(): EmitterId;
 
-    public function getOccuredAt(): \DateTimeImmutable;
+    public function getOccurredAt(): \DateTimeImmutable;
 
     public function getTopic(): Topic;
 }

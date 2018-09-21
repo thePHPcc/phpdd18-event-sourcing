@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class CheckoutStartedEvent implements Event
 {
-
     /**
      * @var CartItemCollection
      */
@@ -13,7 +12,7 @@ class CheckoutStartedEvent implements Event
     /**
      * @var \DateTimeImmutable
      */
-    private $occuredAt;
+    private $occurredAt;
 
     /**
      * @var EmitterId
@@ -23,7 +22,7 @@ class CheckoutStartedEvent implements Event
     public function __construct(EmitterId $emitterId, CartItemCollection $cartItems, \DateTimeImmutable $occuredAt)
     {
         $this->cartItems = $cartItems;
-        $this->occuredAt = $occuredAt;
+        $this->occurredAt = $occuredAt;
         $this->emitterId = $emitterId;
     }
 
@@ -42,8 +41,8 @@ class CheckoutStartedEvent implements Event
         return $this->cartItems;
     }
 
-    public function getOccuredAt(): \DateTimeImmutable
+    public function getOccurredAt(): \DateTimeImmutable
     {
-        return $this->occuredAt;
+        return $this->occurredAt;
     }
 }
