@@ -9,7 +9,7 @@ class EventLog implements \IteratorAggregate
      */
     private $events = [];
 
-    public function append(Event $event)
+    public function append(Event $event): void
     {
         $this->events[] = $event;
     }

@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class CartItem
 {
-
     /**
      * @var string
      */

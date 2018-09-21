@@ -15,6 +15,9 @@ class EventStream
         $this->reader = $reader;
     }
 
+    /**
+     * @throws \RuntimeException
+     */
     public function getNext(): Event
     {
         while (true) {
@@ -23,5 +26,7 @@ class EventStream
             }
             usleep(1500);
         }
+
+        throw new \RuntimeException();
     }
 }

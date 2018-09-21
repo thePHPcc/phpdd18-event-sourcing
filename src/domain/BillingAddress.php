@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class BillingAddress
 {
-
     /**
      * @var string
      */

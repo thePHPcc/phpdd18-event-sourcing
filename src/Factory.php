@@ -28,7 +28,9 @@ class Factory
         );
     }
 
-
+    /**
+     * @throws NoCheckoutIdFoundException
+     */
     public function createCheckout(): Checkout
     {
         return new Checkout($this->createEventLogReader()->read());
@@ -56,7 +58,10 @@ class Factory
 
     public function createBillingAddressProjector(): BillingAddressProjector
     {
-        return new BillingAddressProjector($this->createBillingAddressProjectionRenderer(), $this->createProjectionWriter());
+        return new BillingAddressProjector(
+            $this->createBillingAddressProjectionRenderer(),
+            $this->createProjectionWriter()
+        );
     }
 
     public function createStartCheckoutCommand(): StartCheckoutCommand

@@ -4,7 +4,6 @@ namespace Eventsourcing;
 
 class SessionId
 {
-
     /**
      * @var string
      */

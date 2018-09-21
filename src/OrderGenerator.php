@@ -26,6 +26,7 @@ class OrderGenerator
                 )
             );
         }
+
         return $orderItems;
     }
 }

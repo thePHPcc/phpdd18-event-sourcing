@@ -3,14 +3,15 @@
 namespace Eventsourcing\Http;
 
 use Eventsourcing\Session;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Views\PhpRenderer;
 
 class AddressPageQuery
 {
     /**
-      * @var Session
-      */
+     * @var Session
+     */
     private $session;
 
     /**
@@ -24,7 +25,10 @@ class AddressPageQuery
         $this->renderer = $renderer;
     }
 
-    public function execute(Response $response)
+    /**
+     * @throws \Eventsourcing\NoCheckoutIdFoundException
+     */
+    public function execute(Response $response): ResponseInterface
     {
         if (!$this->session->hasCheckoutId()) {
             return $response->withRedirect('/');
@@ -32,8 +36,11 @@ class AddressPageQuery
 
         $id = $this->session->getCheckoutId();
         $data = [
-            'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html')
+            'cartItemList' => file_get_contents(
+                __DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html'
+            )
         ];
+
         return $this->renderer->render($response, 'address.phtml', $data);
     }
 }

@@ -14,10 +14,10 @@ class EventListener
         $this->registry = $registry;
     }
 
-    public function handle(EventLog $eventLog)
+    public function handle(EventLog $eventLog): void
     {
         foreach ($eventLog as $event) {
-            /**@var \Eventsourcing\Event $event*/
+            /**@var \Eventsourcing\Event $event */
             foreach ($this->registry->get($event->getTopic()) as $eventHandler) {
                 /** @var EventHandler $eventHandler */
                 $eventHandler->handle($event);

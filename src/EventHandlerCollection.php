@@ -10,7 +10,7 @@ class EventHandlerCollection implements \IteratorAggregate
      */
     private $eventHandlers = [];
 
-    public function add(EventHandler $eventHandler)
+    public function add(EventHandler $eventHandler): void
     {
         $this->eventHandlers[] = $eventHandler;
     }

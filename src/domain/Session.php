@@ -4,6 +4,9 @@ namespace Eventsourcing;
 
 class Session
 {
+    /**
+     * @throws NoCheckoutIdFoundException
+     */
     public function getCheckoutId(): EmitterId
     {
         if ($this->hasCheckoutId()) {
@@ -17,7 +20,7 @@ class Session
         return isset($_SESSION['checkout_id']);
     }
 
-    public function setCheckoutId(EmitterId $checkoutId)
+    public function setCheckoutId(EmitterId $checkoutId): void
     {
         $_SESSION['checkout_id'] = $checkoutId->asString();
     }

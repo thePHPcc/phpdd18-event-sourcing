@@ -7,6 +7,7 @@ class BillingAddressProjectionRenderer
     public function render(BillingAddress $billingAddress): BillingAddressProjection
     {
         $template = file_get_contents(__DIR__ . '/templates/billingAddress.html');
+
         return new BillingAddressProjection(
             str_replace(
                 [

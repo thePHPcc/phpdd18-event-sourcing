@@ -32,6 +32,7 @@ class EventStreamReader
         $statement->bindValue('identifier', $this->streamIdentifier->asString());
         $statement->bindValue('topic', $this->topic->asString());
         $statement->execute();
+
         return $statement->fetchColumn(0) !== false;
     }
 

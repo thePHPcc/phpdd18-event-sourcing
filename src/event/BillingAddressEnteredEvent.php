@@ -7,7 +7,7 @@ class BillingAddressEnteredEvent implements Event
     /**
      * @var \DateTimeImmutable
      */
-    private $occuredAt;
+    private $occurredAt;
 
     /**
      * @var EmitterId
@@ -19,9 +19,9 @@ class BillingAddressEnteredEvent implements Event
      */
     private $billingAddress;
 
-    public function __construct(\DateTimeImmutable $occuredAt, EmitterId $emitterId, BillingAddress $billingAddress)
+    public function __construct(\DateTimeImmutable $occurredAt, EmitterId $emitterId, BillingAddress $billingAddress)
     {
-        $this->occuredAt = $occuredAt;
+        $this->occurredAt = $occurredAt;
         $this->emitterId = $emitterId;
         $this->billingAddress = $billingAddress;
     }
@@ -36,9 +36,9 @@ class BillingAddressEnteredEvent implements Event
         return $this->emitterId;
     }
 
-    public function getOccuredAt(): \DateTimeImmutable
+    public function getOccurredAt(): \DateTimeImmutable
     {
-        return $this->occuredAt;
+        return $this->occurredAt;
     }
 
     public function getTopic(): Topic

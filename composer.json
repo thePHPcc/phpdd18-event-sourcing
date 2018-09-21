@@ -3,6 +3,8 @@
         "classmap": ["src/"]
     },
     "require": {
+        "php": ">=7.2",
+        "ext-pdo": "*",
         "slim/slim": "^3.10",
         "monolog/monolog": "^1.23",
         "slim/php-view": "^2.2"

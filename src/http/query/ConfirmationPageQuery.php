@@ -3,14 +3,15 @@
 namespace Eventsourcing\Http;
 
 use Eventsourcing\Session;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Views\PhpRenderer;
 
 class ConfirmationPageQuery
 {
     /**
-      * @var Session
-      */
+     * @var Session
+     */
     private $session;
 
     /**
@@ -24,7 +25,10 @@ class ConfirmationPageQuery
         $this->renderer = $renderer;
     }
 
-    public function execute(Response $response)
+    /**
+     * @throws \Eventsourcing\NoCheckoutIdFoundException
+     */
+    public function execute(Response $response): ResponseInterface
     {
         if (!$this->session->hasCheckoutId()) {
             return $response->withRedirect('/');
@@ -32,9 +36,14 @@ class ConfirmationPageQuery
 
         $id = $this->session->getCheckoutId();
         $data = [
-            'billingAddress' => file_get_contents(__DIR__ . '/../../../var/projections/billing-address_' . $id->asString() . '.html'),
-            'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html')
+            'billingAddress' => file_get_contents(
+                __DIR__ . '/../../../var/projections/billing_address_' . $id->asString() . '.html'
+            ),
+            'cartItemList' => file_get_contents(
+                __DIR__ . '/../../../var/projections/cart_items_' . $id->asString() . '.html'
+            )
         ];
+
         return $this->renderer->render($response, 'confirm.phtml', $data);
     }
 }
