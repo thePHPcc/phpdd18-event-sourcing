@@ -22,9 +22,17 @@ class EventHandlerRegistry
             case $topic->equals(new CheckoutStartedTopic()):
                 $this->addCheckoutStartedEventHandlers($eventHandlers);
                 break;
+            case $topic->equals(new BillingAddressEnteredTopic()):
+                $this->addBillingAddressEnteredEventHandlers($eventHandlers);
+                break;
         }
 
         return $eventHandlers;
+    }
+
+    private function addBillingAddressEnteredEventHandlers(EventHandlerCollection $eventHandler)
+    {
+        $eventHandler->add($this->factory->createBillingAddressProjector());
     }
 
     private function addCheckoutStartedEventHandlers(EventHandlerCollection $eventHandlers)

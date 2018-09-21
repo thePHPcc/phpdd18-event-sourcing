@@ -49,6 +49,11 @@ class Factory
         return new EventListener($this->createEventHandlerRegistry());
     }
 
+    public function createBillingAddressProjector(): BillingAddressProjector
+    {
+        return new BillingAddressProjector($this->createBillingAddressProjectionRenderer(), $this->createProjectionWriter());
+    }
+
     private function createEventLogReader(): PdoEventLogReader
     {
         return new PdoEventLogReader($this->createSession(), $this->createPdo());
@@ -72,5 +77,10 @@ class Factory
     private function createSession(): Session
     {
         return new Session();
+    }
+
+    private function createBillingAddressProjectionRenderer(): BillingAddressProjectionRenderer
+    {
+        return new BillingAddressProjectionRenderer();
     }
 }
