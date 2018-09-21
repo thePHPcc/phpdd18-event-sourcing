@@ -15,7 +15,7 @@ class OrderPlacedEmailConfirmationSender implements EventHandler
         $this->mailService = $mailService;
     }
 
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         /** @var OrderPlacedEvent $event */
         $mail = new Mail('Order Confirmation', $event->getOrder()->getBillingAddress()->getEmail());

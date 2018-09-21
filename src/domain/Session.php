@@ -17,7 +17,7 @@ class Session
         return isset($_SESSION['checkout_id']);
     }
 
-    public function setCheckoutId(EmitterId $checkoutId)
+    public function setCheckoutId(EmitterId $checkoutId): void
     {
         $_SESSION['checkout_id'] = $checkoutId->asString();
     }

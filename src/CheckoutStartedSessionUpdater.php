@@ -14,7 +14,7 @@ class CheckoutStartedSessionUpdater implements EventHandler
         $this->session = $session;
     }
 
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         /** @var CheckoutStartedEvent $event */
         $this->session->setCheckoutId($event->getEmitterId());

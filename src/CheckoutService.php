@@ -41,7 +41,7 @@ class CheckoutService
         $this->processEvents($checkout->getRecordedEvents());
     }
 
-    private function processEvents(EventLog $recordedEvents)
+    private function processEvents(EventLog $recordedEvents): void
     {
         $this->eventLogWriter->write($recordedEvents);
         $this->eventListener->handle($recordedEvents);

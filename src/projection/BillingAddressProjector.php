@@ -19,7 +19,7 @@ class BillingAddressProjector implements EventHandler
         $this->projectionWriter = $projectionWriter;
     }
 
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         /** @var BillingAddressEnteredEvent $event */
         $projection = $this->renderer->render($event->getBillingAddress());

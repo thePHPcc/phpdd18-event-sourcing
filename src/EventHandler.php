@@ -4,5 +4,5 @@ namespace Eventsourcing;
 
 interface EventHandler
 {
-    public function handle(Event $event);
+    public function handle(Event $event): void;
 }

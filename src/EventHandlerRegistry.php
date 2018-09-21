@@ -30,12 +30,12 @@ class EventHandlerRegistry
         return $eventHandlers;
     }
 
-    private function addBillingAddressEnteredEventHandlers(EventHandlerCollection $eventHandler)
+    private function addBillingAddressEnteredEventHandlers(EventHandlerCollection $eventHandler): void
     {
         $eventHandler->add($this->factory->createBillingAddressProjector());
     }
 
-    private function addCheckoutStartedEventHandlers(EventHandlerCollection $eventHandlers)
+    private function addCheckoutStartedEventHandlers(EventHandlerCollection $eventHandlers): void
     {
         $eventHandlers->add($this->factory->createCheckoutStartedSessionUpdater());
         $eventHandlers->add($this->factory->createCartItemListProjector());
