@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 class CheckoutStartedEvent implements Event
 {
 
@@ -34,6 +35,4 @@ class CheckoutStartedEvent implements Event
     {
         return $this->occuredAt;
     }
-
-
 }

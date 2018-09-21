@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 use PHPUnit\Framework\TestCase;
 
 class CartServiceTest extends TestCase
@@ -42,5 +43,4 @@ class CartServiceTest extends TestCase
             [new SessionId('10603jjdasv8vpid64t214762l'), 25],
         ];
     }
-
 }

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+
 class Checkout
 {
 
@@ -59,5 +60,4 @@ class Checkout
         $this->hasBeenStarted = true;
         $this->cartItems = $event->getCartItems();
     }
-
 }
