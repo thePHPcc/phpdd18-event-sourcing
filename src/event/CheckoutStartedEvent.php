@@ -15,10 +15,21 @@ class CheckoutStartedEvent implements Event
      */
     private $occuredAt;
 
-    public function __construct(CartItemCollection $cartItems, \DateTimeImmutable $occuredAt)
+    /**
+     * @var EmitterId
+     */
+    private $emitterId;
+
+    public function __construct(EmitterId $emitterId, CartItemCollection $cartItems, \DateTimeImmutable $occuredAt)
     {
         $this->cartItems = $cartItems;
         $this->occuredAt = $occuredAt;
+        $this->emitterId = $emitterId;
+    }
+
+    public function getEmitterId(): EmitterId
+    {
+        return $this->emitterId;
     }
 
     public function getTopic(): Topic

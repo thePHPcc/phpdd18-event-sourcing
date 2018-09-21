@@ -11,32 +11,40 @@ class Checkout
     private $eventLog;
 
     /**
-     * @var bool
+     * @var EmitterId
      */
-    private $hasBeenStarted = false;
+    private $emitterId;
 
     /**
      * @var CartItemCollection
      */
     private $cartItems;
 
-    public function __construct()
+    public function __construct(EventLog $history)
     {
+        $this->replay($history);
         $this->eventLog = new EventLog();
     }
 
     public function startCheckout(CartItemCollection $cartItems)
     {
-        if ($this->hasBeenStarted) {
+        if ($this->emitterId !== null) {
             throw new CheckoutAlreadyStartedException();
         }
-        $event = new CheckoutStartedEvent($cartItems, new \DateTimeImmutable());
+        $event = new CheckoutStartedEvent(new EmitterId(), $cartItems, new \DateTimeImmutable());
         $this->recordEvent($event);
     }
 
     public function getRecordedEvents(): EventLog
     {
         return $this->eventLog;
+    }
+
+    private function replay(EventLog $eventLog)
+    {
+        foreach ($eventLog as $event) {
+            $this->applyEvent($event);
+        }
     }
 
     private function recordEvent(Event $event)
@@ -57,7 +65,7 @@ class Checkout
 
     private function applyCheckoutStartedEvent(CheckoutStartedEvent $event)
     {
-        $this->hasBeenStarted = true;
+        $this->emitterId = $event->getEmitterId();
         $this->cartItems = $event->getCartItems();
     }
 }

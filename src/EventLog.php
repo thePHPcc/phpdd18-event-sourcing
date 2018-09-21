@@ -2,7 +2,7 @@
 
 namespace Eventsourcing;
 
-class EventLog
+class EventLog implements \IteratorAggregate
 {
     /**
      * @var Event[]
@@ -12,5 +12,10 @@ class EventLog
     public function append(Event $event)
     {
         $this->events[] = $event;
+    }
+
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->events);
     }
 }
