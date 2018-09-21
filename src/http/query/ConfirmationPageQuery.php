@@ -32,8 +32,8 @@ class ConfirmationPageQuery
 
         $id = $this->session->getCheckoutId();
         $data = [
-            'billingAddress' => file_get_contents(__DIR__ . '/../../../var/projections/billing_address_' . $id->asString() . '.html'),
-            'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart_items_' . $id->asString() . '.html')
+            'billingAddress' => file_get_contents(__DIR__ . '/../../../var/projections/billing-address_' . $id->asString() . '.html'),
+            'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html')
         ];
         return $this->renderer->render($response, 'confirm.phtml', $data);
     }
