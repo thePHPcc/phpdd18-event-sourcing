@@ -4,6 +4,7 @@ namespace Eventsourcing\Http;
 
 use Eventsourcing\Session;
 use Slim\Http\Response;
+use Slim\Views\PhpRenderer;
 
 class ConfirmationPageQuery
 {
@@ -12,9 +13,15 @@ class ConfirmationPageQuery
       */
     private $session;
 
-    public function __construct(Session $session)
+    /**
+     * @var PhpRenderer
+     */
+    private $renderer;
+
+    public function __construct(Session $session, PhpRenderer $renderer)
     {
         $this->session = $session;
+        $this->renderer = $renderer;
     }
 
     public function execute(Response $response)
@@ -24,11 +31,10 @@ class ConfirmationPageQuery
         }
 
         $id = $this->session->getCheckoutId();
-        $renderer = new \Slim\Views\PhpRenderer(__DIR__ . '/../templates');
         $data = [
             'billingAddress' => file_get_contents(__DIR__ . '/../../../var/projections/billing_address_' . $id->asString() . '.html'),
             'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart_items_' . $id->asString() . '.html')
         ];
-        return $renderer->render($response, 'confirm.phtml', $data);
+        return $this->renderer->render($response, 'confirm.phtml', $data);
     }
 }

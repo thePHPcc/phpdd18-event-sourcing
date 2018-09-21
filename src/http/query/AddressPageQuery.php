@@ -4,6 +4,7 @@ namespace Eventsourcing\Http;
 
 use Eventsourcing\Session;
 use Slim\Http\Response;
+use Slim\Views\PhpRenderer;
 
 class AddressPageQuery
 {
@@ -12,9 +13,15 @@ class AddressPageQuery
       */
     private $session;
 
-    public function __construct(Session $session)
+    /**
+     * @var PhpRenderer
+     */
+    private $renderer;
+
+    public function __construct(Session $session, PhpRenderer $renderer)
     {
         $this->session = $session;
+        $this->renderer = $renderer;
     }
 
     public function execute(Response $response)
@@ -24,10 +31,9 @@ class AddressPageQuery
         }
 
         $id = $this->session->getCheckoutId();
-        $renderer = new \Slim\Views\PhpRenderer(__DIR__ . '/../templates');
         $data = [
             'cartItemList' => file_get_contents(__DIR__ . '/../../../var/projections/cart-items_' . $id->asString() . '.html')
         ];
-        return $renderer->render($response, 'address.phtml', $data);
+        return $this->renderer->render($response, 'address.phtml', $data);
     }
 }
