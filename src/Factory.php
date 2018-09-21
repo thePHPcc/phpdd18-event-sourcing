@@ -136,4 +136,12 @@ class Factory
     {
         return new PhpRenderer(__DIR__ . '/projection/templates');
     }
+	
+	public function createAddBillingAddressCommand() {
+    	return new AddBillingAddressCommand($this->createCheckoutService());
+	}
+	
+	public function createPlaceOrderCommand() {
+    	return new PlaceOrderCommand($this->createCheckoutService());
+	}
 }
