@@ -26,4 +26,3 @@ $writer = $factory->createEventLogWriter();
 $writer->write($eventLog);
 
 $factory->createEventListener()->handle($eventLog);
-

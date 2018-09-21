@@ -47,16 +47,18 @@ class CheckoutService
         $this->eventLogWriter->write($recordedEvents);
         $this->eventListener->handle($recordedEvents);
     }
-	
-	public function setBillingAddress(BillingAddress $billingAddress) {
-		$checkout = new Checkout($this->eventLogReader->read());
-		$checkout->setBillingAddress($billingAddress);
-		$this->processEvents($checkout->getRecordedEvents());
+    
+    public function setBillingAddress(BillingAddress $billingAddress)
+    {
+        $checkout = new Checkout($this->eventLogReader->read());
+        $checkout->setBillingAddress($billingAddress);
+        $this->processEvents($checkout->getRecordedEvents());
     }
     
-    public function placeOrder() {
-		$checkout = new Checkout($this->eventLogReader->read());
-		$checkout->placeOrder();
-		$this->processEvents($checkout->getRecordedEvents());
-	}
+    public function placeOrder()
+    {
+        $checkout = new Checkout($this->eventLogReader->read());
+        $checkout->placeOrder();
+        $this->processEvents($checkout->getRecordedEvents());
+    }
 }

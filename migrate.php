@@ -18,4 +18,3 @@ $pdo->exec(
       last_id INTEGER 
     )'
 );
-
