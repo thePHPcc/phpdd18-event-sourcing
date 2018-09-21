@@ -26,5 +26,7 @@ class EventStream
             }
             usleep(1500);
         }
+
+        throw new \RuntimeException();
     }
 }
